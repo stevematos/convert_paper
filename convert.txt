@@ -1,0 +1,136 @@
+Abstract — Many businesses rely on forecasting techniques to
+detect whether sales opportunities are likely to be won or at risk
+of being lost. This enables the businesses to respond proactively.
+This paper describes a new method of sales forecasting that
+improves on an existing Qualitative Sales Predictor (QSP) in
+Hewlett-Packard (HP). QSP is based on a series of qualitative
+assessments that are made by sales personnel, the results of which
+are combined using weighted factors. In this research, we have
+developed an alternative method of forecasting sales
+opportunities, with three key differences: (1) the qualitative
+assessments are supplemented with quantitative data describing
+attributes of the opportunity; (2) we replace the weight factors
+with a Tree Augmented Naïve Bayes (TAN) classifier that can
+capture dependences between variables and produces a
+probabilistic output to which thresholds can be applied; (3) the
+TAN classifier is of course learned from historical data, whereas
+the existing QSP has fixed weights. Our approach has an
+accuracy of 90.6% in predicting whether sales will be won or lost,
+a substantial improvement on the existing approach’s accuracy
+of 75.6% on the same unseen test data.
+Keywords—classification; tree augmented naïve Bayes; sales
+forecasting; data analytics; machine learning; Bayesian models.
+
+I. INTRODUCTION
+
+Big Data must be analysed to uncover meaningful, useful
+and prompt insights. Data analytics allows for the identification
+of new business opportunities, more efficient use of limited
+resources and improved decision making in a timely and
+actionable manner [11]. One key data analytics task is to
+predict outcomes of future events, such as sales. Sales
+forecasting involves identifying trends in historical data,
+discovering relationships between sales attributes [6], and
+estimating the likelihood of a sales opportunity to win or lose.
+It is critical that key decision makers such as sales leaders have
+access to sales data and accurate forecasts in a relevant way, so
+they can take actions, make efficient decisions and react to
+change as quickly as possible. An existing forecasting model,
+which we refer to in this paper as Qualitative Sales Predictor
+(QSP), has been evaluated in HP. As described in Section II.A,
+it consists of a scoring system applied to qualitative data.
+The research in this paper focuses on detecting deals at risk
+of being lost or deals with potential to be won that may have
+been incorrectly classified by QSP. We identify candidate
+machine learning algorithms for this task, apply and evaluate
+whether they deliver higher performance for the task of sales
+forecasting. Specifically we consider Bayesian classifiers
+because: (1) they can handle uncertainty in a principled
+
+manner; (2) except for Naïve Bayes classifiers, they can handle
+dependencies between variables, whereas the existing QSP
+does not; (3) they output probabilities that can be further
+interpreted; (4) they can be constructed by inductive learning
+from historical data.
+As well as using more sophisticated algorithms than those
+used in QSP, we combine both quantitative and qualitative
+sales attributes, to further improve performance. Discrepancies
+between QSP’s predictions and our Bayesian classifier
+predictions will provide insight and alerts to the sales team.
+This in turn will drive a sales forecasting alert system to detect
+deals at risk and deals with potential to win that have been
+incorrectly classified. HP Enterprise Services have developed
+a sales mobile app used globally by sales management and
+executive level in the business. Our proposed Bayesian
+classifier is being embedded in it, to drive deal-specific alerts.
+This will guide the sales team to close more deals, increase
+sales, identify deals at risk that may require an intervention,
+accelerate the sales force productivity and overall result in a
+more efficient sales pipeline.
+
+II. RELATED WORK
+A. Sales Forecasting Methods
+Machine learning and statistics are widely used for sales
+analytics and to determine significant factors for sales
+forecasting. Some of the methods used in industries include
+linear regression, neural networks and Bayesian networks [2].
+Rotenberg et al. [13, 14] describe a multivariate regression
+approach for sales forecasting used by Insight Squared and
+identifies key influencing factors as opportunity value, sales
+stage and the age of the opportunity. IBM’s Watson analytics
+[7] uses logistic regression and scalable analytics and the user
+can analyse the sales data with plain language queries.
+However, these sales forecasting algorithms only use
+quantitative data which could potentially exclude valuable
+qualitative sales details. Qualitative forecasting is essential if
+historical data is not available, but can supplement quantitative
+data also. It can include informed opinion or judgment, market
+research, or questionnaires that converge towards an accurate
+answer.
+HP’s QSP aims to provide a snapshot of how an
+opportunity is positioned to win based on the sales team’s
+opinion. The sales team assess an opportunity according to
+many qualitative factors such as customer relationship,
+competitive position and terms and conditions of an
+opportunity. The sales team assign Green, Amber or Red to
+each qualitative assessment and a weighting factor is applied to
+these answers to produce a final predictor score. The scores are
+categorised into Win, Borderline Loss and Loss. An advantage
+of this model is that it is based on the salesperson’s opinion
+which can measure factors which may not be possible to
+quantify or calculate computationally. However, as noted by
+Rotenberg et al. [14], a risk with qualitative-only forecasts is
+that questions may not be answered accurately due to poor
+judgement, over-optimism or intentional underestimation by
+the salesperson. The ideal sales forecast should combine both
+qualitative and quantitative data, learning from historical sales
+data and use the most influential and significant sales factors.
+B. Machine Learning
+Machine learning is concerned with techniques and
+algorithms for performing tasks that improve with experience
+at performing specific tasks [11]. The main categories of
+machine learning tasks are classification, regression,
+clustering, co-training, relationship discovery, and
+reinforcement learning. We approach the sales forecasting
+problem of this paper as a probabilistic classification task, as
+the goal is to estimate the likelihood of a sales opportunity
+being won or lost. Popular classification algorithms include
+linear regression, logistic regression, Bayesian classifiers,
+neural networks and decision trees [16]. For this paper, we will
+focus on Bayesian classification algorithms, for the reasons
+that were outlined in the Introduction.
+Bayesian networks provide a probabilistic representation of
+knowledge. A Bayesian network is composed of the network
+structure (a directed acyclic graph with arcs representing
+dependencies between variables, represented as nodes) and a
+set of conditional probabilities associated with the arcs.
+General Bayesian Networks (GBNs) and restricted network
+structures such as Naïve Bayes and TAN (see below) may be
+used in classification [10]. First, the network structure and its
+probabilities are induced from the data. Then, it is assumed that
+the value of the class node is unknown and the values of all
+other nodes are known, and for every possible instantiation of
+the class node, the joint probability of all variables in the
+network is calculated. Equation (1) shows the conditional
+probability calculation of a node Xi, given the values of all of
+its parent nodes.
