@@ -1,8 +1,11 @@
+archivo = open("convert.txt", "a", encoding='utf-8') 
+archivo.write('\n')
+archivo.close()
 archivo = open("convert.txt", "r", encoding='utf-8') 
 convertido = open("convertido.txt", "w", encoding='utf-8') 
-capitulos = ['I','II','III','IV','V','VI','VII','VIII']
+capitulos = ['I','II','III','IV','V','VI','VII','VIII','1','2','3','4','5','6','7']
 subcapitulos = ['A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h']
-capitulo_final = ['ACKNOWLEDGMENT', 'ACKNOWLEDGMENTS']
+capitulo_final = ['ACKNOWLEDGMENT', 'ACKNOWLEDGMENTS','Abstract','Acknowledgements']
 for linea in archivo.readlines(): 
     if linea[-1]=='\n':
         linea_convertida=linea[:-1]

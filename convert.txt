@@ -1,81 +1,293 @@
-It is important to note that the Borderline Loss predictions
-are not included in the computation of Accuracy, whereas they
-are included in the computation of the other scores above. We
-could describe the True Positive Rate and related scores as
-pessimistic, as they will consider as incorrect any predictions
-that fall into the borderline loss zone, whereas the Accuracy
-measure is optimistic as it ignores predictions in that zone. For
-this reason, it is advisable to consider all of these scores
-together to get a clear picture of classifiers’ performance.
-
-The percentage of opportunities that were classified in the
-Borderline Loss category for each algorithm was observed. The
-existing QSP model classifies 26.69% of opportunities in this
-category for the dataset obseved, while the TAN classifier and
-Naïve Bayes classifier categorise 7.83% and 6.65% in the
-Borderline Loss category, respectively. The most ideal
-prediction algorithm would predict few or no opportunities in
-this category.
-A comparison of all three predictor models is shown in
-Table 6.
-B. ROC Curves
-ROC (receiver operating characteristic) curves are used to
-examine and compare the predictive performance of the
-classifiers. It plots the true positive rate of a classifier against
-its false positive rate (or 1 – TNR). The graphical plot measures
-classifier performance by calculating the area under the curve
-(AUC). A perfect classifier would have a curve which reaches
-the most upper left corner of the graph with a true positive rate
-
-C. Discussion of Results
-From these results, it is observed that Bayesian classifiers
-show a significant improvement on the existing QSP used by
-HP. More specifically, the TAN classifier proved to be the
-most accurate of all the models evaluated.
-As a result of these accuracies, it was decided to use the TAN
-model for the sales forecasting model and to drive a future
-alert system application. A comparison of the TAN models
-predictions and existing QSP predictions side by side was
-observed and analysed. The predictions were also analysed
-when filtered by attributes such as Region, Sub Region, Deal
-Type and Contract Value Range and predictive accuracy of the
-TAN model remained high in comparison to the QSP.
-For the validation dataset, the TAN classifier predicted
-differently to the existing QSP in 43.8% of instances. These
-are examples of when the alert system would highlight the
-opportunities to the sales teams and the TAN classifier
-predicted correctly for 87.75% of these.
-V. CONCLUSION
-
-Analytics provide the fuel for an organization to make
-better decisions faster. The primary focus of this paper is
-development of a more accurate forecasting model that can be
-used to implement a sales forecasting alert system in HP. In
-this paper, we propose an improved method of predicting sales
-opportunities’ outcomes using machine learning methods.
-Of the algorithms evaluated, Bayesian classifiers were
-found to be the most useful and suitable learning algorithms for
-the application and data. More specifically, the TAN classifier
-
-had the highest predictive accuracy in testing and validation.
-The final approach yielded 90.6% accuracy, indicating that the
-TAN algorithm significantly improved upon the QSP, which
-had an accuracy of 75.6% on the same test data. The TAN
-model will be used to develop an alerting system for the sales
-team for improved decision making for open pipeline
-opportunities and to identify the main ‘risk factor’ for
-individual opportunities.
-It is interesting to note that, given the extremely high
-performance delivered by our Bayesian classifiers, it can be
-concluded that the answers of the sales team are valuable and
-of high quality, despite the risk of errors when depending on
-sales peoples’ judgement identified by Rotenberg et al., as was
-discussed in Section II.
-Future work for the forecasting model will include a more
-complex analysis of attribute influence on classification and
-optimisation of feature selection.
-ACKNOWLEDGMENTS
-
-The authors would like to acknowledge the support and
-help of the Hewlett-Packard Enterprise Services IT Business
-Intelligence Team, led by Simon Walsh.
+Detection of the relationship between parameters
+Verification of correlation among the prediction parameters
+by using MATLAB correlation matrix. In statistics, the
+correlation coefficient r measures the strength and direction of
+a linear relationship between two variables on a scatter plot.
+The value of r is between +1 and –1. To interpret its value, see
+which of the following values your correlation r as following:
+TABLE I. R VALUE AND I NTERPRETATION
+Figure 4. Correlation Matrix of Parameters (1/2)
+The parameters used in building forecasting model are date,
+weekday, Mean temperature and Relative Humidity. The
+correlation matrix of forecasting parameters is shown in the
+Figure 4.
+The above correlation matrix tells that only weak positive
+or negative correlation occurs among the 4 forecasting
+parameters. The linear relationship among 4 parameters is from
+-0.10 to 0.17, which is a small range of correlation coefficient r.
+From the correlation analysis, forecasting parameters including
+date, weekday, mean temperature and relative humidity are
+proved that they are linear independence and suitable to be the
+input parameters of model building simultaneously.
+Figure 5. Correlation Matrix of Parameter (2/2)
+C. Model definition and developing (Network Architecture
+Design)
+Neural Network is applied to forecast the daily number of
+customers by input time information and weather condition,
+including date, weekday, mean temperature and relative
+humidity.
+To optimal the performance of prediction model, there are
+some important parameters should be considered and adjusted.
+Algorithm type, number of neurons, number of hidden layers.
+Figure 6. Data-Driven Framework for Improving Decision-Making Process
+The above diagram is an interpretative illustration of the
+neural network model being concreted and how it fits into the
+overall forecasting process of matching inputs(4 parameters) to
+output (daily number of customers). The parameters was
+preprocessed with normalization, constant row removing and
+correlation analysis. After preprocessing, the inputs were feed
+into the neural network model. Weight and bias are two
+important supportive factors to neural network model. The
+lines between each inputs and each of the neurons(N) in hidden
+layer have different weights. Bias layer (B) is also designed to
+optimal the neural network model.
+r value Interpretation
+1 Perfect linear relationship
+0 to 1
+The two variables tend to have positive linear
+relationship.
+0 The two variables do not vary at all
+-1 to 0
+The two variables tend to have negative linear
+relationship.
+-1 Perfect negative or inverse linear relationship.
+202
+Feed-forward Backpropagation Network is used to build
+our forecasting model. The weight and bias was iteratively
+adjusted by the neural network until the matching of inputs and
+the given output of customers. Backpropagation is applied in
+attempt to minimize the loss function.
+Algorithm
+Training function
+MATLAB has provided many neural network training
+function, the most common three training function are used in
+our model building. Training functions used in our research are
+Trainlm (Levenberg-Marquardt), Trainbfg (BFGS Quasi-
+Newton), Trainscg (Scale Conjugate Gradient) which are the
+built-in training functions in MATLAB.
+Levenberg-Marquardt produces an output which it
+compares to the target output, then systematically backtracks
+and alters the weight until the network’s mean squared error is
+minimized (supervised learning)-fast and efficient and suitable
+for most networks.
+Training is often the fastest back propagation algorithm in
+the toolbox, and is highly recommended as a first-choice
+supervised algorithm, although it does require more memory
+than other algorithms. This algorithm generally converges in
+fewer iterations but it requires more computation in iterations
+and more storage than the conjugate gradient methods. It is the
+most common training algorithm used in research of neural
+network.
+Three training algorithms applied and tested in our model
+building, Levenberg-Marquardt optimization always perform
+better than BFGS Quasi-Newton and Scale Conjugate Gradient.
+TABLE II. TRAINING ALGORITHMS
+??????
+????????
+????????
+?????????
+???????
+????????? ??????
+????????
+????????
+?????????
+???????
+????????? ??????
+????????
+????????
+?????????
+???????
+?????????
+? ??????? ? ??????? ? ???????? ? ??????? ? ???????? ? ???????
+? ??????? ? ?????? ? ???????? ? ??????? ? ???????? ? ???????
+? ??????? ? ??????? ? ???????? ? ??????? ? ???????? ? ???????
+? ??????? ? ?????? ? ???????? ? ??????? ? ???????? ? ???????
+? ??????? ? ?????? ? ???????? ? ??????? ? ???????? ? ???????
+? ??????? ?? ?????? ? ???????? ?? ??????? ? ???????? ?? ???????
+? ??????? ?? ??????? ? ???????? ?? ??????? ? ???????? ?? ??????
+? ??????? ?? ??????? ? ???????? ?? ??????? ? ???????? ?? ???????
+? ??????? ?? ??????? ? ???????? ?? ??????? ? ???????? ?? ???????
+?? ??????? ?? ??????? ?? ???????? ?? ??????? ?? ???????? ?? ???????
+?? ??????? ?? ??????? ?? ???????? ?? ??????? ?? ???????? ?? ???????
+Transfer function
+Feedforward networks often have one or more hidden
+layers of sigmoid neurons followed by an output layer of linear
+neurons. Multiple layers of neurons with nonlinear transfer
+functions allow the network to learn nonlinear and linear
+relationships between input and output vectors. \
+Figure 7. Data-Driven Framework for Improving Decision-Making Process
+The hyperbolic tangent sigmoid function and pure linear
+function constrain the output values between -1 and 1. On the
+other hand, the logistic sigmoid produces the output values into
+the range 0 to 1.
+To learn the complex relationships (linear and nonlinear) in
+our model, the transfer functions applied in hidden layers and
+output layer are Tangent Sigmoid and Pure linear respectively.
+Number of Hidden Layers (1)
+Without any hidden layers, the network can only learn the
+linear relationships among the inputs. Most practical problems
+can be represented by one hidden layer, and there is no
+theoretical reason why any more than two hidden layers would
+be needed.
+In this research, we just apply one hidden layers to the
+neural network model. The best result were achieved with
+correlation coefficient of 0.85 and relative root mean square
+error of 5.2%. From the result, 1 hidden layer was adequate to
+forecast the output.
+Number of Neurons
+The artificial neural network structure with inputs, 1 hidden
+layer with 5 to 15 neurons and 1 output layer was established.
+Under fitting will occur if not enough neurons are used and
+over fitting will occur if too many neurons are used. Forward
+and backward trial selection of the number of neurons is an
+acceptable way of choosing the optimal network size.
+The parameters setting used in forecasting model building
+are shown in the following table:
+TABLE III. P ARAMETERS S ETTING AND A LTERNATIVE
+Parameters Setting Alternative
+Non-constant
+Training functions
+Trainlm (Levenberg-Marquardt)
+Trainbfg (Quasi-Newton)
+Trainscg (Scale Conjugate Gradient)
+Number of neurons
+in hidden layers
+5 to 15
+Division of Data (Ratio)
+(70:15:15),(80:10:10)
+Constant
+Network Type Feedforward Backpropagation Network
+Number of hidden layers 1
+Learning rate 0.3
+Validation Times 6
+Division of Data (Method) Random-dividerand
+The forecasting neural network structure was built and
+shown in the following graph.
+203
+Figure 8. Data-Driven Framework for Improving Decision-Making Process
+The best Artificial Neural Network among all of them
+would be assessed with the performance index. The results are
+obtained and can be analyzed through the plot functions in
+MATLAB:
+? Plot perform
+? Plot trainstate
+? Plot errhist
+? Plot regression
+? Plot fit
+The best Neural Network with overall R of 84.2% is
+compiled into MATLAB function. Using this best model
+function, we developed Graphical User Interface (GUI) which
+help pharmacy making decision with this simple tool.
+VI. R ESULTS AND D ISCUSSION
+Following the Deep Learning framework the prediction
+model was executed, as shown in the results section. Such
+model is comes as the product of many trial executed by
+considering several weather parameters including precipitation,
+relative humidity, temperature, raining hours, sunshine hours,
+wind speed, standard pressure, all this to come up with a
+customer prediction model as accurate as possible.
+In order to try several possibilities we proceeded to build
+two different models, the first one considering 5 parameters
+(weekdays, date, mean temperature, precipitation hours,
+sunshine), and the second one considering 4 parameters
+(weekdays, date, humidity, mean temperature).
+It was important to check the forecasting model applying
+different variables, and for this case to then choose the more
+accurate prediction model. In this research both models showed
+similar levels of accuracy, however the second type of model
+was chosen due to the fact that the paremeters used to build it
+present a higher accessibility, allowing the user to be able to
+effectively use to model.
+TABLE IV. M ODEL P ERFORMANCE T ABLE
+Data Set R MAPE MAE MSE
+Training
+Data
+0.915 3.34% 6.54 94.94
+Testing
+Data
+0.823 8.55% 16.81 495.31
+Validation
+Data
+0.791 12.41% 20.17 575.11
+Overall 0.842 5.157% 10.03 223.52
+Based on the results the route taken by this research follow
+the model based on the 4 parameters. Now the final prediction
+model selected resulted from the several trials and the end
+chosing the best model with the higher overall accuracy of
+84.2%. Joined to this information the MAPE presented a
+overall percentage of 5.157 %, MAE a value of 10.3 and the
+MSE an overall value of 223.52. The values obtained, that
+describe our “best model” positioned it as the best one among
+the several models product of our trial and testing process.
+Figure 9. Error Distribution Graph
+Following the description of the prediction model, checking
+the different error distributions resulted crucial to present an
+accurate model. With this objective been clear the error
+distribution, absolute error distribution and absolute percent
+error distribution where analyzed and as is shown in Figure 10
+the different distributions support the veracity of the
+forecasting model.
+Figure 10. Actual and Forecasted Customer Flow Comparison (Orange Line:
+Furcated Information; Blue Line: Actual Information)
+To confirm the accuracy of the selected model a
+comparison was executed between the forecasted information
+provided by the model and the actual information from the
+204
+pharmacy which confirmed the accuracy of our model, as
+shown in Figure 11. Such comparison results crucial for the
+development of the research were a real confirmation of the
+possibility of using weather parameters to outcast customer
+flow. This comparison is the confirmation that the research was
+successful in this aspect.
+UX is the concept intended to explore a person’s experience,
+emotion, intuition and connection when interacting with a
+product in several situations and screenplay. Following this
+concept it was required that the prediction model was translated
+into an interface that could allow a user make use of it. This is
+how the Graphical User Interface came up as a tool that made
+accessible for users to utilize the customer prediction model
+that was built.
+Figure 11. Pharmacy Customer Forecasting Graphical User Interface
+Separated from the deep learning and modeling building
+section, a sales analysis was performed to find information that
+could represent an important tool for the pharmacy to have a
+better understanding of how the different parameters involved
+in a transaction affect the way that purchases occur.
+VII. C ONCLUSION , C ONTRIBUTION AND F UTURE P LANNING
+Due to the high competitively among different types of
+fields in the market, this trends are forcing them to constantly
+improve their strategy to enhance their service quality to
+preserve and attract more customer to their business. To ensure
+their competitive advantage among the others, methods,
+analysis, and other factor were use in their system to increase
+their productivity. While this research are focused on the
+accuracy of the predicting model that was built based on data
+extracted from the POS and weather data.
+This research represents a window for improvements in the
+decision making process executed by the management body,
+having now access to information that enhances the process.
+Deep Learning played a fundamental role been crucial in
+the building of the customer prediction model through the
+Artificial Neural Network based on weather parameters, seen
+that these can, indeed, be used to make customer flow
+predictions.
+The information obtained through the research benefits the
+administrative policies bases, in aspects such as, allocations of
+resources (employees, products, etc.), good use of supplies,
+enhancement of competitiveness in general. Enhancement of
+service quality translated into customer satisfaction.
+Although this research is developed oriented towards a
+pharmacy, it is expected for it to be applicable on different
+retailing business, especially in the service industry including
+restaurants, and supermarkets, among others. The research sets
+the bases in an administrative business matter to continue
+developing different models for them to provide more accurate
+actual and future information that can enlighten the managers,
+generally speaking. The next step in our research is to
+implement other factors that might affect the customers
+quantity, and apply the Rolling prediction method to forecast
+further information that can be useful for the pharmacy.
+A CKNOWLEDGMENT
+This research is supported by National Science Council
+(NSC 105-2410-H-468-002-MY2, NSC102-2632-E-468-001-
+MY3)
